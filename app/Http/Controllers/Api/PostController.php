@@ -30,12 +30,12 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $validator=Validator::make($request->all(),[
-            'title'=>'required|max:255',
-            'body'=>'required'
-    ]);
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+            'body' => 'required'
+        ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $this->apiResponse(null, $validator->errors(), 400);
 
         }
@@ -44,6 +44,30 @@ class PostController extends Controller
             return $this->apiResponse(new PostResources ($post), 'Post saved in database!', 201);
         }
         return $this->apiResponse(null, 'Not saved in database!', 400);
+
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+            'body' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->apiResponse(null, $validator->errors(), 400);
+
+        }
+        $post = Post::find($id);
+        if (!$post) {
+            return $this->apiResponse(null, 'Not Found!', 404);
+         }
+
+        $post->update($request->all());
+        if ($post) {
+            return $this->apiResponse(new PostResources ($post), 'Post update in database!', 201);
+        }
+        return $this->apiResponse(null, 'Not updated in database!', 400);
 
     }
 
