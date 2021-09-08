@@ -23,3 +23,4 @@ Route::get('/posts',[PostController::class,'index']);
 Route::get('/posts/{id}',[PostController::class,'show']);
 Route::post('/posts/add',[PostController::class,'store']);
 Route::post('/posts/update/{id}',[PostController::class,'update']);
+Route::post('/posts/delete/{id}',[PostController::class,'destroy']);
