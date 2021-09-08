@@ -61,7 +61,7 @@ class PostController extends Controller
         $post = Post::find($id);
         if (!$post) {
             return $this->apiResponse(null, 'Not Found!', 404);
-         }
+        }
 
         $post->update($request->all());
         if ($post) {
@@ -71,4 +71,16 @@ class PostController extends Controller
 
     }
 
+    public function destroy($id)
+    {
+        $post = Post::find($id);
+        if (!$post) {
+            return $this->apiResponse(null, 'Not Found!', 404);
+        }
+
+        $post->delete($id);
+        if ($post) {
+            return $this->apiResponse(null, 'Post delete in database!', 200);
+        }
+    }
 }
