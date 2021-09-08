@@ -13,17 +13,15 @@ class PostController extends Controller
 
     public function index()
     {
-//        $posts = Post::get();
-        $posts =  PostResources::collection(Post::get());
-
+        $posts = PostResources::collection(Post::get());
         return $this->apiResponse($posts, 'OK!', 200);
     }
 
     public function show($id)
     {
-        $post = new PostResources (Post::find($id));
+        $post = Post::find($id);
         if ($post) {
-            return $this->apiResponse($post, 'OK!', 200);
+            return $this->apiResponse(new PostResources ($post), 'OK!', 200);
         }
         return $this->apiResponse(null, 'Not Found!', 404);
 
