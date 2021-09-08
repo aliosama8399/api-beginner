@@ -27,4 +27,14 @@ class PostController extends Controller
 
     }
 
+    public function store(Request $request)
+    {
+        $post = Post::create($request->all());
+        if ($post) {
+            return $this->apiResponse(new PostResources ($post), 'Post saved in database!', 201);
+        }
+        return $this->apiResponse(null, 'Not saved in database!', 400);
+
+    }
+
 }
