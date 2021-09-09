@@ -17,8 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
+//return $request->user();
 //});
+
 
 Route::group([
     'middleware' => 'api',
@@ -33,14 +34,17 @@ Route::group([
 });
 
 
+Route::middleware(['jwt.verify'])->group(function () {
+
+    Route::get('/posts',[PostController::class,'index']);
+    Route::get('/post/{id}',[PostController::class,'show']);
+    Route::post('/posts',[PostController::class,'store']);
+    Route::post('/post/{id}',[PostController::class,'update']);
+    Route::post('/posts/{id}',[PostController::class,'destroy']);
+
+});
 
 
 
 
 
-
-Route::get('/posts',[PostController::class,'index']);
-Route::get('/posts/{id}',[PostController::class,'show']);
-Route::post('/posts/add',[PostController::class,'store']);
-Route::post('/posts/update/{id}',[PostController::class,'update']);
-Route::post('/posts/delete/{id}',[PostController::class,'destroy']);
